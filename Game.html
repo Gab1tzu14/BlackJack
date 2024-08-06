@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tests</title>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class = "profile">
+    <div id = "profile-balance">
+        <img id="youlol" src="you.jpg">
+        <p id="amountlol"> 0</p>
+        <button id="plusbtn">+</button>
+    </div>
+    
+    <div id="newdep">
+        <div id="newdepmenu">
+            <input class="inputs" placeholder="ex:100" id="newdepst">
+            <button id="addmore" onclick="newdep()">Deposit</button>
+        </div>
+    </div>
+</div>
+
+
+
+        <p id="dealer-cards"></p>
+        <p id="dealer-sum"></p>
+        <p id="player-cards"></p>
+        <p id="player-sum"></p>
+        <p id="text"></p>
+        <div id="betset">
+            <div><input id="bettingvalue" class="inputs" placeholder="Place Bet">
+            <button id="clearel">Clear</button></div>
+            <div><button class = "betacc" onclick="imu()">x2</button>
+            <button class = "betacc" onclick="imp()">1/2</button>
+            <button class = "betacc" onclick="maxa()">max </button></div>
+            </div>
+        </div>
+        <button id="newgame-bu" onclick="betverify()">NEW GAME</button>
+        <button id="hit-bu" onclick="hit()">HIT</button>
+        <button id="stand-bu" onclick="stand()">STAND</button>
+        </div>
+        <script src="game.js"></script> 
+</body>
+</html>
