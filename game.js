@@ -13,7 +13,7 @@ let player = {
 }
 let dealer = {
     cards:[],
-    sum: 0
+    sum: 0,
 }
 document.getElementById("amountlol").innerHTML = localStorage.getItem("Credits")    
 
@@ -44,6 +44,8 @@ function newdep(){
         localStorage.setItem("Credits",PlCred)
         document.getElementById("newdepst").value = ""
         document.getElementById("amountlol").innerHTML = PlCred
+        document.getElementById("newdepmenu").style.display = "none"
+        depsoitmenuvalue = 0;
     }
     else{
         alert("Don't type characters in deposit amount, just numbers, ex: 100")
@@ -92,6 +94,48 @@ function gencard(){
     return rangen
 }
 
+function cardimg(cardnr){
+    if(cardnr == 1){
+        return "cards/ace11.jpg"
+    }
+    if(cardnr == 2){
+        return "cards/nr2.png"
+    }
+    if(cardnr == 3){
+        return "cards/nr3.png"
+    }
+    if(cardnr == 4){
+        return "cards/nr4.png"
+    }
+    if(cardnr == 5){
+        return "cards/nr5.png"
+    }
+    if(cardnr == 6){
+        return "cards/nr6.png"
+    }
+    if(cardnr == 7){
+        return "cards/nr7.png"
+    }
+    if(cardnr == 8){
+        return "cards/nr8.png"
+    }
+    if(cardnr == 9){
+        return" cards/nr9.png"
+    }
+    if(cardnr == 10){
+        return "cards/nr10.png"
+    }
+    if(cardnr == 11){
+        return "cards/nr12.jpg"
+    }
+    if(cardnr == 12){
+        return "cards/nr13.jpg"
+    }
+    if(cardnr == 13){
+        return "cards/nr14.jpg"
+    }
+}
+
 function betverify(){
     if(document.getElementById("bettingvalue").value == ""){
         alert("please set a value to bet!")
@@ -131,6 +175,7 @@ function newgame(){
     document.getElementById('hit-bu').style.display = "inline"
     document.getElementById('stand-bu').style.display = "inline"
     document.getElementById('newgame-bu').style.display = "none"
+    document.getElementById("Dealercardslist").innerHTML = "";
     alive = true
     bj = false
     amoutnbetted = Number(document.getElementById("bettingvalue").value)
@@ -139,9 +184,14 @@ function newgame(){
     playerace = false
     player.cards.length = 0
     dealer.cards.length = 0
-    document.getElementById('dealer-cards').textContent = ""
+
     dealer.cards.push(gencard())
     dealer.cards.push(gencard())
+
+    document.getElementById("Dealercardslist").innerHTML += `<li><img class="cardimgmarim" src="cards/cardback.jpg"></li>`;
+    document.getElementById("Dealercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(dealer.cards[1])}"></li>`;
+
+
     if(dealer.cards[0] === 1 && dealer.cards[1] > 1){
         dealer.sum = 11 + dealer.cards[1]
         dealerace1 = true
@@ -159,6 +209,10 @@ function newgame(){
     dealer.sum = dealer.cards[0] + dealer.cards[1]}
     player.cards.push(gencard())
     player.cards.push(gencard())
+
+    document.getElementById("playercardslist").innerHTML = `<li><img class="cardimgmarim" src="${cardimg(player.cards[0])}"></li>`;
+    document.getElementById("playercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(player.cards[1])}"></li>`;
+
     if(player.cards[0] === 1 && player.cards[1] > 1){
         player.sum = 11 + player.cards[1]
         playerace = true
@@ -174,7 +228,7 @@ function newgame(){
     }
     else{
     player.sum = player.cards[0] + player.cards[1]}
-    document.getElementById('dealer-cards').textContent ="Dealer's cards: " + "?" +" "+ dealer.cards[1]
+    document.getElementById('dealer-cards').textContent ="Dealer's cards"
     if(dealerace2 === true){
     document.getElementById('dealer-sum').textContent = "Dealer's sum: "
     document.getElementById('dealer-sum').textContent += 1
@@ -184,7 +238,7 @@ function newgame(){
     else{
     document.getElementById('dealer-sum').textContent = "Dealer's sum: "
     document.getElementById('dealer-sum').textContent += dealer.cards[1]}
-    document.getElementById('player-cards').textContent ="Your cards: " + player.cards[0] +" "+ player.cards[1]
+    document.getElementById('player-cards').textContent ="Your cards"
     if(playerace === true){
         document.getElementById('player-sum').textContent = "Your sum: "
         document.getElementById('player-sum').textContent += player.sum - 10
@@ -192,7 +246,6 @@ function newgame(){
         document.getElementById('player-sum').textContent += player.sum
         }
         else{
-    document.getElementById('player-cards').textContent = "Your cards: "+player.cards[0] +" "+ player.cards[1]
     document.getElementById('player-sum').textContent = "Your sum: "+ player.sum}
     rendergame()}
 }
@@ -206,8 +259,9 @@ function rendergame(){
         document.getElementById('hit-bu').style.display = "none"
             document.getElementById('stand-bu').style.display = "none"
             document.getElementById('newgame-bu').style.display = "inline"
-            document.getElementById('dealer-cards').textContent ="Dealer's cards: " + dealer.cards[0] +" "+ dealer.cards[1]
         document.getElementById('dealer-sum').textContent = "Dealer's sum "+ dealer.sum
+        document.getElementById("Dealercardslist").innerHTML = `<li><img class="cardimgmarim" src="${cardimg(dealer.cards[0])}"></li>`;
+        document.getElementById("Dealercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(dealer.cards[1])}"></li>`;
     }
     else{
         document.getElementById('text').textContent = 'YOU GOT A BLACKJACK!'
@@ -219,6 +273,7 @@ function rendergame(){
 function hit(){
     if(alive && bj === false){
     let newcard = gencard()
+    document.getElementById("playercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(newcard)}"></li>`;
     if(playerace === true && player.sum + newcard >21){
         playerace = false
         player.sum -= 10
@@ -234,11 +289,9 @@ function hit(){
     player.cards.push(newcard)
     player.sum += newcard}
     if(playerace === false){
-    document.getElementById('player-cards').textContent += " " +newcard
     document.getElementById('player-sum').textContent = "Your sum: "+ player.sum}
     else
     {
-        document.getElementById('player-cards').textContent += " " +newcard
         document.getElementById('player-sum').textContent = "Your sum: "
         document.getElementById('player-sum').textContent += player.sum - 10
         document.getElementById('player-sum').textContent += "/"
@@ -250,13 +303,15 @@ function hit(){
 function stand(){
     if(alive === true){
         alive = false
-        document.getElementById('dealer-cards').textContent ="Dealer's cards: " + dealer.cards[0] +" "+ dealer.cards[1]
+        document.getElementById("Dealercardslist").innerHTML = `<li><img class="cardimgmarim" src="${cardimg(dealer.cards[0])}"></li>`;
+        document.getElementById("Dealercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(dealer.cards[1])}"></li>`;
         document.getElementById('dealer-sum').textContent = "Dealer's sum "+ dealer.sum
         if(dealer.sum > player.sum){
             document.getElementById('text').textContent = 'You lost, click "NEW GAME" to start a new game'
         }
         while(dealer.sum < player.sum){
             let newcard = gencard()
+            document.getElementById("Dealercardslist").innerHTML += `<li><img class="cardimgmarim" src="${cardimg(newcard)}"></li>`;
             if((dealerace1 === true|| dealerace2 === true) && dealer.sum + newcard >21){
                 dealerace1 = false
                 dealerace2 = false
@@ -267,7 +322,6 @@ function stand(){
             dealer.cards.push(newcard)
             dealer.sum += newcard
             player.cards.remove}
-            document.getElementById('dealer-cards').textContent += " " +newcard
             document.getElementById('dealer-sum').textContent = "Dealer's sum "+ dealer.sum
         }
         if(dealer.sum === player.sum){

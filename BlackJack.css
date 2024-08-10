@@ -15,6 +15,10 @@ p{
     font-size: 20px;
     font-weight: bold;
 }
+#Gab1tzu{
+    text-shadow: 0px 0px 10px black;
+}
+
 button{
     padding: 20px;
     width: 200px;
