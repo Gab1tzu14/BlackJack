@@ -93,6 +93,8 @@ ul{
     margin-right: 15px;
     text-align: center;
     display: none;
+    position: fixed;
+    right: 10px;
 }
 #addmore{
     background-color:#036C11;
